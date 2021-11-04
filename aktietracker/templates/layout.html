@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicons/favicon.ico') }}"/>
+
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='normalize.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='layout.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='forms.css') }}">
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='vue.js') }}"></script>
+
+  {% if title %}
+    <title>{{ title }} - Aktietracker</title>
+  {% else %}
+    <title>Aktietracker</title>
+  {% endif %}
+</head>
+<body>
+
+  <script type="text/javascript">
+
+  $(document).ready(function () {
+    /*
+    const vm = new Vue({
+        el: '#vm',
+        delimiters: ['[[', ']]'],
+        data: {
+            selectedNavBtn: "{{ selected_button }}"
+        }
+    })
+    */
+    $(".selected-nav-item").removeClass("selected-nav-item");
+    $("#{{ selected_button }}").addClass("selected-nav-item");
+  });
+
+
+
+
+
+  </script>
+
+  <div class="left-bar">
+      <nav class="navbar">
+          <h2 class="main-header noselect">Aktietracker</h2>
+
+          <div>
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('main.dashboard') }}">
+              <div class="nav-item noselect" id="dashboard">
+                <span class="material-icons">dashboard</span>
+                <span class="link-text">Dashboard</span>
+              </div>
+            </a>
+
+            <a href="{{ url_for('main.watchlists') }}">
+              <div class="nav-item noselect" id="watchlists">
+                <span class="material-icons">view_list</span>
+                <span class="link-text">Watchlists</span>
+              </div>
+            </a>
+
+            <a href="{{ url_for('users.account') }}">
+              <div class="nav-item noselect" id="account">
+                <span class="material-icons">account_circle</span>
+                <span class="link-text">Account</span>
+              </div>
+            </a>
+
+            <a href="{{ url_for('main.settings') }}">
+              <div class="nav-item noselect" id="settings">
+                <span class="material-icons">settings</span>
+                <span class="link-text">Settings</span>
+              </div>
+            </a>
+
+            <a href="{{ url_for('users.logout') }}">
+              <div class="nav-item noselect" id="logout">
+                <span class="material-icons">logout</span>
+                <span class="link-text">Logout</span>
+              </div>
+            </a>
+
+
+
+            {% else %}
+            <a href="{{ url_for('main.index') }}">
+              <div class="nav-item selected-nav-item noselect" id="welcome">
+                <span class="material-icons">home</span>
+                <span class="link-text">Welcome</span>
+              </div>
+            </a>
+            <a href="{{ url_for('users.login') }}">
+              <div class="nav-item noselect" id="login">
+                <span class="material-icons">login</span>
+                <span class="link-text">Login</span>
+              </div>
+            </a>
+            <a href="{{ url_for('users.register') }}">
+              <div class="nav-item noselect" id="register">
+                <span class="material-icons">how_to_reg</span>
+                <span class="link-text">Register</span>
+              </div>
+            </a>
+            {% endif %}
+
+
+
+
+
+
+
+
+          </div>
+
+
+          <footer>
+            <a class="small-link small-text noselect" href="{{ url_for('main.index') }}">Contact</a>
+
+          </footer>
+      </nav>
+    </div>
+
+  <main>
+    <div class="content-spacing" id="main-container">
+      {% block content %}{% endblock %}
+
+    </div>
+  </main>
+
+  <div id="hidden-data" style="display:none;">
+    <span id="selected_nav_button">Welcome</span>
+  </div>
+
+
+
+
+
+</body>
+</html>

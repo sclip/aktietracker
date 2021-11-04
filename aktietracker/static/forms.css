@@ -1,0 +1,84 @@
+.form-control-label {
+  color: #EEE;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.form-control {
+  margin-top: 4px;
+  margin-bottom: 6px;
+  padding: 6px;
+  background-color: var(--dark-content-bg-color);
+  color: var(--text-color);
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 4px;
+  width: 98.3%;
+}
+
+.login-form-paddings {
+  width: 50%;
+}
+
+.login-form-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  width: 99%;
+  margin: 0 auto;
+}
+
+.login-form-header {
+  font-size: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.btn {
+  padding: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin: 2px;
+  color: var(--text-color);
+  background-color: #f44336;
+  border: 0;
+  border-radius: 2px;
+  text-align: center;
+}
+
+.btn:hover {
+  background-color: #ef5350;
+  cursor: pointer;
+}
+
+.sign-in-btn {
+  background-color: #9c27b0;
+}
+
+.sign-in-btn:hover {
+  background-color: #ab47bc;
+}
+
+
+
+.fieldset {
+  border: 0;
+}
+
+.login-form-relink {
+  display: block;
+  margin-top: 4px;
+  width: 100%;
+  text-align: center;
+}

@@ -1,0 +1,106 @@
+html {
+  height: 100%;
+
+  --bg-color: #262626;
+  --text-color: #EEE;
+  --dark-content-bg-color: #303030;
+  --content-bg-color: #333;
+  --shadow-color: #202020;
+}
+
+body {
+  background-color: var(--bg-color);
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  color: var(--text-color);
+  font-family: "Segoe UI", sans-serif;
+}
+
+main {
+  width: 100%;
+}
+
+.in-text-link {
+  margin-left: 2px;
+}
+
+.in-text-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.content-section {
+  background-color: var(--content-bg-color);
+  margin-top: 18px;
+  padding: 12px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px var(--shadow-color);
+}
+
+#main-container {
+  width: auto;
+  left: 162.23px;
+  right: 0;
+  position: absolute;
+}
+
+p {
+  font-size: 12px;
+}
+
+.small-text {
+  font-size: 11px;
+  opacity: 80%;
+}
+
+a {
+  color: #EEE;
+  text-decoration: none;
+}
+
+.content-spacing {
+  padding: 4px;
+  margin: 8px;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.horizontal-flexbox {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
