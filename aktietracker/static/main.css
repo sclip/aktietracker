@@ -2,10 +2,14 @@ html {
   height: 100%;
 
   --bg-color: #262626;
+  --light-bg-color: #3b3a3a;
+  --box-color: #535050;
   --text-color: #EEE;
   --dark-content-bg-color: #303030;
+  --hovered-box-color: #605f5f;
   --content-bg-color: #333;
   --shadow-color: #202020;
+  --border-color: #525252;
 }
 
 body {
@@ -103,4 +107,22 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+select {
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 4px;
+  border-radius: 4px;
+  color: var(--text-color);
+  background-color: var(--box-color);
+  border: 0;
+}
+
+select:hover {
+  background-color: var(--hovered-box-color);
+}
+
+.space-filler-1 {
+  width: 2%;
 }

@@ -1,7 +1,106 @@
 {% extends "layout.html" %}
 {% block content %}
 
-<div class="content-section">
-  Watchlists
+
+
+<div id="watchlist-content-container">
+  <div class="space-filler-1">
+
+  </div>
+  <div class="content-section watchlist-content-section" id="watchlist-page-content">
+    <div id="watchlist-container">
+      <div class="noselect" id="watchlist-container-top-bar">
+        <div class="">
+          <label for="watchlist-selector">Watchlist:</label>
+
+          <select name="watchlist-selector" id="watchlist-selector">
+
+						<option value="None">None</option>
+
+						{% for watchlist_ in current_user.watchlists %}
+
+							<option value="{{ watchlist_.name }}">watchlist_.name</option>
+
+						{% endfor %}
+
+
+          </select>
+        </div>
+        <div class="btn" id="add-watchlist-btn" title="Add new watchlist">
+          +
+        </div>
+      </div>
+
+      <div class="" id="watchlist-content">
+
+        {% for stock in current_user.watchlists[0] %}
+          {{ stock.ticker }}
+        {% endfor %}
+
+				<div v-for="stock in stocks_list" class="watchlist-item">
+					<div class="">
+						[[stock]]
+					</div>
+					<div class="">
+
+					</div>
+				</div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="content-section watchlist-content-section" id="watchlist-page-content2">
+  </div>
+
+  <div class="space-filler-1">
+
+  </div>
 </div>
+
+<script>
+
+	const watchlist = new Vue({
+			el: '#watchlist-content',
+			delimiters: ['[[', ']]'],
+			data: {
+					stocks_list: ["null"]
+			}
+	})
+
+	function select_watchlist() {
+
+		$.ajax({
+			data : {
+				watchlist_name : $("#watchlist-selector").val()
+			},
+			type : "POST",
+			url: "/process_watchlist_request"
+		})
+		.done(function(data) {
+			if (data.success == false) {
+				watchlist.stocks_list = ["Select a watchlist or create a new one"]
+			} else {
+				watchlist.stocks_list = data.stocks;
+			}
+
+		});
+	}
+
+	$(document).ready(function() {
+
+
+
+		select_watchlist();
+
+		$("#watchlist-selector").change(function() {
+			select_watchlist();
+		});
+
+
+	});
+</script>
+
 {% endblock content %}

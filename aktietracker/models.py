@@ -19,6 +19,7 @@ class User(db.Model, UserMixin):
 
 class Watchlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(60), nullable=False)
     stocks = db.relationship("Stock", backref="watchlist", lazy=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
 
