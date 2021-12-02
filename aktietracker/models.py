@@ -29,7 +29,7 @@ class Watchlist(db.Model):
 
 class Stock(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    ticker = db.Column(db.String(10), unique=True, nullable=False)
+    ticker = db.Column(db.String(10), nullable=False)
     watchlist_id = db.Column(db.Integer, db.ForeignKey("watchlist.id"), nullable=False)
 
     def __repr__(self):

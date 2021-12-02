@@ -8,6 +8,8 @@ app = create_app()
 def main():
     # create_db()
     app.run(debug=True)
+    # app.run(debug=True, host="0.0.0.0")
+    # host="0.0.0.0"
 
 
 def create_db():

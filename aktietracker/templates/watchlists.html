@@ -19,9 +19,15 @@
 
 						{% for watchlist_ in current_user.watchlists %}
 
-							<option value="{{ watchlist_.name }}">watchlist_.name</option>
+							<option value="{{ watchlist_.name }}">{{watchlist_.name}}</option>
 
 						{% endfor %}
+            <div class="" id="watchlist-selection">
+              <div v-for="watchlist_name in watchlist_names">
+                <option>[[watchlist_name]]</option>
+              </div>
+            </div>
+
 
 
           </select>
@@ -33,10 +39,6 @@
 
       <div class="" id="watchlist-content">
 
-        {% for stock in current_user.watchlists[0] %}
-          {{ stock.ticker }}
-        {% endfor %}
-
 				<div v-for="stock in stocks_list" class="watchlist-item">
 					<div class="">
 						[[stock]]
@@ -45,6 +47,21 @@
 
 					</div>
 				</div>
+
+				<div class="watchlist-item btn " id="add-stock-btn">
+					<span id="add-stock-btn-text" class="muted-text noselect">+ Add Stock</span>
+
+
+				</div>
+
+        <div class="watchlist-item btn " id="add-stock-btn-2">
+          <span id="add-stock-input-container">
+            <input type="text" class="entry-field" name="new-stock" value="" id="add-stock-input" >
+
+            <span id="add-stock-done" class="material-icons btn add-stock-btn noselect">done</span>
+            <span id="add-stock-cancel" class="material-icons btn add-stock-btn noselect">close</span>
+          </span>
+        </div>
 
       </div>
 
@@ -60,15 +77,69 @@
   </div>
 </div>
 
+<div class="popup-window-container" id="new-watchlist-popup">
+	<div class="popup-window column-flexbox">
+		<h2 class="border-bottom center-text">New Watchlist</h2>
+    <div class="add-watchlist-input-container">
+      <label for="new-watchlist">Watchlist name:</label>
+      <input type="text" name="new-watchlist" value="" class="entry-field" id="add-watchlist-input">
+    </div>
+		<div class="space-height-filler-3">
+
+		</div>
+		<div class="horizontal-flexbox">
+			<div class="btn popup-btns" id="new-watchlist-cancel">
+				Cancel
+			</div>
+			<div class="space-filler-3">
+
+			</div>
+			<div class="btn popup-btns" id="new-watchlist-done-btn">
+				Done
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 
 	const watchlist = new Vue({
-			el: '#watchlist-content',
+			el: '#watchlist-container',
 			delimiters: ['[[', ']]'],
 			data: {
-					stocks_list: ["null"]
+					stocks_list: ["null"],
+          watchlist_names: ["None"]
 			}
 	})
+
+
+	function show_popup() {
+		$("#new-watchlist-popup").show();
+	}
+
+	function hide_popup() {
+		$("#new-watchlist-popup").hide();
+	}
+
+
+  function get_watchlists() {
+    $.ajax({
+      data: {
+
+      },
+      type: "POST",
+      url: "/process_get_watchlists"
+    }).done(function(data) {
+      if (data.success == true) {
+        watchlist.watchlist_names = data.watchlists;
+        // alert("success");
+      } else {
+        // alert("not success");
+      }
+    });
+  }
+
+
 
 	function select_watchlist() {
 
@@ -81,7 +152,10 @@
 		})
 		.done(function(data) {
 			if (data.success == false) {
-				watchlist.stocks_list = ["Select a watchlist or create a new one"]
+				watchlist.stocks_list = [
+					"Create new watchlists with the + in the top right",
+					"Add stocks using the 'Add Stock' button below"
+				]
 			} else {
 				watchlist.stocks_list = data.stocks;
 			}
@@ -91,13 +165,83 @@
 
 	$(document).ready(function() {
 
-
-
+		hide_popup();
+    get_watchlists();
 		select_watchlist();
+    $("#add-stock-btn-2").hide();
 
 		$("#watchlist-selector").change(function() {
 			select_watchlist();
 		});
+
+		$("#new-watchlist-cancel").click(function(){
+			hide_popup();
+      $("#add-watchlist-input").val("");
+		});
+
+		$("#add-watchlist-btn").click(function(){
+			show_popup();
+		});
+
+    $("#add-stock-btn").click(function(){
+      $("#add-stock-btn").hide();
+      $("#add-stock-btn-2").show();
+      $("#add-stock-input").focus();
+    });
+
+    $("#add-stock-cancel").click(function(){
+      $("#add-stock-btn").show();
+      $("#add-stock-btn-2").hide();
+      $("#add-stock-input").val("");
+    });
+
+    $("#add-stock-done").click(function(){
+      $.ajax({
+  			data : {
+  				stock_name : $("#add-stock-input").val(),
+          selected_watchlist: $("#watchlist-selector").val()
+  			},
+  			type : "POST",
+  			url: "/process_add_stock"
+  		})
+  		.done(function(data) {
+  			if (data.success == false) {
+  				// Error message here
+          alert("error");
+  			} else {
+          select_watchlist();
+          $("#add-stock-input").val("");  // Clear the input field
+          hide_popup();
+  			}
+
+  		});
+
+
+    })
+
+    $("#new-watchlist-done-btn").click(function(){
+      $.ajax({
+        data : {
+          new_watchlist_name : $("#add-watchlist-input").val()
+        },
+        type : "POST",
+        url: "/process_add_watchlist"
+      })
+      .done(function(data) {
+        if (data.success == false) {
+          // Error message here
+          alert("error");
+        } else {
+          select_watchlist();
+          $("#add-watchlist-input").val("");
+          // Clear the input field
+        }
+
+      });
+    })
+
+
+
 
 
 	});
